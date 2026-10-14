@@ -1,52 +1,62 @@
 # WalletIQ
 
-WalletIQ is a personal finance dashboard for tracking income and expenses, managing budgets, reviewing spending trends, and generating AI-assisted financial insights.
+WalletIQ is a personal finance dashboard for tracking income and expenses, setting budgets, exploring spending trends, and generating AI-assisted financial insights.
 
 ## Features
 
-- User registration and JWT-based authentication
-- Dashboard summary, category breakdown, and monthly trends
-- Income and expense transaction management
-- Custom categories with icons and colors
-- Monthly and weekly budgets
-- Budget analysis and transaction analysis
-- AI-generated monthly insights, budget alerts, and savings tips with Gemini
-- Demo data seeding for local development
+- Register and sign in with JWT-based authentication
+- Track income and expenses
+- Organize transactions with custom categories
+- Create weekly and monthly budgets
+- Review dashboard summaries, category breakdowns, and monthly trends
+- Generate AI-assisted spending insights and budget suggestions with Google Gemini
+- Seed a local development database with demo data
 
-## Tech Stack
+## Tech stack
 
 - **Frontend:** React 19, Vite, React Router, Tailwind CSS, Recharts, Axios
-- **Backend:** Node.js, Express, PostgreSQL, JWT, bcryptjs
-- **AI:** Google Gemini via `@google/genai`
+- **Backend:** Node.js, Express 5
+- **Database:** PostgreSQL
+- **Authentication:** JWT and bcryptjs
+- **AI integration:** Google Gemini via `@google/genai`
 
-## Project Structure
+## Application structure
 
 ```text
 WalletIQ/
 ├── backend/
-│   ├── controllers/       Request handlers
-│   ├── middleware/        Authentication middleware
-│   ├── routes/            Express API routes
-│   ├── scripts/           Database migration and seed scripts
-│   ├── sql/               PostgreSQL schema
-│   ├── db.js              PostgreSQL connection pool
-│   └── server.js          API server entry point
+│   ├── controllers/
+│   ├── middleware/
+│   ├── routes/
+│   ├── scripts/
+│   ├── sql/
+│   ├── db.js
+│   └── server.js
 ├── frontend/
-│   ├── src/components/    Reusable UI components
-│   ├── src/context/       React context providers
-│   ├── src/pages/         Application pages
-│   └── src/main.jsx       Frontend entry point
+│   └── src/
+│       ├── components/
+│       ├── context/
+│       └── pages/
 └── README.md
 ```
 
-## Prerequisites
+## Requirements
 
-- Node.js 20 or newer recommended
+- Node.js 20 or newer
 - npm
 - A PostgreSQL database
-- A Gemini API key for AI features
+- A Google Gemini API key for AI-generated insights
 
-## Configuration
+## Local setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/PriyanshiZunke/WalletIQ.git
+cd WalletIQ
+```
+
+### 2. Configure the backend
 
 Create `backend/.env`:
 
@@ -57,149 +67,102 @@ GEMINI_API_KEY=your-gemini-api-key
 PORT=8000
 ```
 
-`PORT` defaults to `8000` when omitted. `GEMINI_API_KEY` is required for AI-powered features, but the API can start without it; those features will not work until it is configured.
+Use your own PostgreSQL connection string and a long, random JWT secret. Keep real credentials out of Git.
 
-The frontend defaults to `http://localhost:8000/api`. To use another API URL, create `frontend/.env`:
+### 3. Install dependencies
 
-```env
-VITE_API_URL=http://localhost:8000/api
-```
-
-## Installation
-
-Install dependencies in both applications:
+In a terminal:
 
 ```bash
 cd backend
 npm install
+```
 
-cd ../frontend
+In a second terminal, from the repository root:
+
+```bash
+cd frontend
 npm install
 ```
 
-## Database Setup
+### 4. Create the database schema
 
-Run the schema migration from the `backend` directory:
+From `backend/`:
 
 ```bash
 npm run migrate
 ```
 
-To drop and recreate all WalletIQ tables, use:
-
-```bash
-npm run migrate:reset
-```
-
-To create the demo user, categories, budgets, and 12 months of transactions:
+To populate the local database with sample data:
 
 ```bash
 npm run seed
 ```
 
-The seed script removes and recreates the existing demo user before inserting data.
+**Important:** `npm run migrate:reset` drops the existing WalletIQ tables before recreating them. Use it only with a disposable development database; it deletes data in those tables.
 
-## Running Locally
+### 5. Start the backend and frontend
 
-Start the backend in one terminal:
+Backend terminal:
 
 ```bash
 cd backend
 npm run dev
 ```
 
-The API runs at `http://localhost:8000` by default. For a production-style backend process, use `npm start` instead.
-
-Start the frontend in another terminal:
+Frontend terminal:
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-Vite prints the local frontend URL, usually `http://localhost:5173`.
+The backend defaults to `http://localhost:8000`. Vite prints the frontend URL in the terminal. The frontend uses `http://localhost:8000/api` as its default API base URL; if you need a different URL, configure `VITE_API_URL` in the frontend environment.
 
-## Demo Login
+## API overview
 
-After running the seed command:
+The API is mounted under `/api`.
 
-```text
-Email: alex@timetoprogram.com
-Password: Test@1234
-```
+| Area | Base path | Purpose |
+| --- | --- | --- |
+| Authentication | `/api/auth` | Registration, login, current-user information |
+| Categories | `/api/categories` | Manage transaction categories |
+| Transactions | `/api/transactions` | Create, list, update, delete and analyze transactions |
+| Budgets | `/api/budgets` | Manage budgets and budget analysis |
+| Dashboard | `/api/dashboard` | Summary totals and spending trends |
+| Insights | `/api/insights` | Retrieve and generate AI-assisted insights |
 
-## API Overview
+Most application endpoints require a bearer token. Registration, login, and the root health response are public.
 
-All endpoints except registration, login, and the health check require a bearer token:
+## Useful commands
 
-```http
-Authorization: Bearer <token>
-```
+Run these from the appropriate directory.
 
-The API base path is `/api`.
-
-| Method | Endpoint | Description | Auth |
-| --- | --- | --- | --- |
-| `GET` | `/` | API health check | No |
-| `POST` | `/auth/register` | Register a user | No |
-| `POST` | `/auth/login` | Log in and receive a JWT | No |
-| `GET` | `/auth/me` | Get the authenticated user | Yes |
-| `GET` | `/categories` | List categories | Yes |
-| `POST` | `/categories` | Create a category | Yes |
-| `PUT` | `/categories/:id` | Update a category | Yes |
-| `DELETE` | `/categories/:id` | Delete a category | Yes |
-| `GET` | `/transactions` | List transactions with filters | Yes |
-| `POST` | `/transactions` | Create a transaction | Yes |
-| `GET` | `/transactions/:id` | Get one transaction | Yes |
-| `PUT` | `/transactions/:id` | Update a transaction | Yes |
-| `DELETE` | `/transactions/:id` | Delete a transaction | Yes |
-| `POST` | `/transactions/analyze` | Analyze selected transactions | Yes |
-| `GET` | `/budgets` | List budgets with spending totals | Yes |
-| `POST` | `/budgets` | Create a budget | Yes |
-| `PUT` | `/budgets/:id` | Update a budget | Yes |
-| `DELETE` | `/budgets/:id` | Delete a budget | Yes |
-| `POST` | `/budgets/analyze` | Analyze budgets | Yes |
-| `GET` | `/dashboard/summary` | Get dashboard totals | Yes |
-| `GET` | `/dashboard/category-breakdown` | Get spending by category | Yes |
-| `GET` | `/dashboard/monthly-trend` | Get monthly income and expense trends | Yes |
-| `GET` | `/insights` | List saved insights | Yes |
-| `POST` | `/insights/generate` | Generate an AI insight | Yes |
-
-Analysis endpoints use `POST`, not `GET`. For example:
-
-```http
-POST http://localhost:8000/api/transactions/analyze
-Content-Type: application/json
-Authorization: Bearer <token>
-
-{
-  "transactionIds": [2]
-}
-```
-
-## Useful Commands
-
-### Backend
+**Backend** (`backend/`):
 
 ```bash
-npm run dev          # Start with nodemon
-npm start            # Start normally
-npm run migrate      # Apply the schema
-npm run migrate:reset
+npm run dev
+npm start
+npm run migrate
 npm run seed
 ```
 
-### Frontend
+**Frontend** (`frontend/`):
 
 ```bash
-npm run dev          # Start Vite development server
-npm run build        # Create a production build
-npm run preview      # Preview the production build
-npm run lint         # Run ESLint
+npm run dev
+npm run build
+npm run lint
+npm run preview
 ```
 
-## Notes
+## Security and development notes
 
-- The backend uses `DATABASE_URL` for PostgreSQL connectivity and enables SSL with certificate verification disabled for hosted database compatibility.
-- New users receive the default categories during registration.
-- The seed script is intended for development and demo environments. Do not run it against production data.
+- Use a local or disposable development database for seed and reset commands.
+- Never commit `.env` files, database URLs, API keys, or JWT secrets.
+- AI-generated insights are informational and should not be treated as professional financial advice.
+- Verify environment settings and database configuration before deploying to production.
+
+## Repository
+
+[PriyanshiZunke/WalletIQ](https://github.com/PriyanshiZunke/WalletIQ)
