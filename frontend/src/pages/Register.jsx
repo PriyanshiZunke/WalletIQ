@@ -65,7 +65,7 @@ const Register = () => {
                                     value={form.name}
                                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                                     className="w-full bg-slate-100/80 hover:bg-slate-100 focus:bg-white border-2 border-transparent focus:border-violet-500 rounded-2xl px-5 py-4 text-slate-900 text-sm focus:outline-none transition"
-                                    placeholder="Alex"
+                                    placeholder="Priyanshi"
                                 />
                             </div>
 

@@ -123,6 +123,7 @@ The backend defaults to `http://localhost:8000`. Vite prints the frontend URL in
 
 The API is mounted under `/api`.
 
+<<<<<<< HEAD
 | Area | Base path | Purpose |
 | --- | --- | --- |
 | Authentication | `/api/auth` | Registration, login, current-user information |
@@ -131,6 +132,12 @@ The API is mounted under `/api`.
 | Budgets | `/api/budgets` | Manage budgets and budget analysis |
 | Dashboard | `/api/dashboard` | Summary totals and spending trends |
 | Insights | `/api/insights` | Retrieve and generate AI-assisted insights |
+=======
+```text
+Email: priyanshi@gmail.com
+Password: Test@1234
+```
+>>>>>>> f61260b (Add WalletIQ screenshots and update documentation)
 
 Most application endpoints require a bearer token. Registration, login, and the root health response are public.
 
@@ -158,6 +165,7 @@ npm run preview
 
 ## Security and development notes
 
+<<<<<<< HEAD
 - Use a local or disposable development database for seed and reset commands.
 - Never commit `.env` files, database URLs, API keys, or JWT secrets.
 - AI-generated insights are informational and should not be treated as professional financial advice.
@@ -166,3 +174,23 @@ npm run preview
 ## Repository
 
 [PriyanshiZunke/WalletIQ](https://github.com/PriyanshiZunke/WalletIQ)
+=======
+- The backend uses `DATABASE_URL` for PostgreSQL connectivity and enables SSL with certificate verification disabled for hosted database compatibility.
+- New users receive the default categories during registration.
+- The seed script is intended for development and demo environments. Do not run it against production data.
+
+## Screenshots
+
+### Dashboard
+![WalletIQ Dashboard](docs/screenshots/dashboard.png)
+
+### Transactions
+![WalletIQ Transactions](docs/screenshots/transactions.png)
+
+### Budgets
+![WalletIQ Budgets](docs/screenshots/budgets.png)
+
+### AI Insights
+![WalletIQ AI Insights](docs/screenshots/ai-insights1.png)
+![WalletIQ AI Insights](docs/screenshots/ai-insights2.png)
+>>>>>>> f61260b (Add WalletIQ screenshots and update documentation)

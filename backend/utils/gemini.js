@@ -91,7 +91,7 @@ Constraints:
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-3.8-flash",
       contents: prompt,
     });
 
@@ -138,7 +138,7 @@ Severity guide:
 
   try {
     const response = await ai.models.generateContent({
-        model: 'gemini-3.5-flash',
+        model: 'gemini-3.8-flash',
         contents: prompt,
     });
 
@@ -186,7 +186,7 @@ Provide exactly 4 tips. Each tip should:
 
     try {
     const response = await ai.models.generateContent({
-        model: 'gemini-3.5-flash',
+        model: 'gemini-3.8-flash',
         contents: prompt,
     });
 
@@ -244,7 +244,7 @@ export const analyzeTransactionList = async ({
 
   try {
     const response = await ai.models.generateContent({
-        model: 'gemini-3.5-flash',
+        model: 'gemini-3.8-flash',
         contents: prompt,
     });
 
@@ -299,7 +299,7 @@ Return ONLY valid JSON (no markdown):
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-3.8-flash",
       contents: prompt,
     });
 

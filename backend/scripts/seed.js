@@ -3,8 +3,8 @@ import pool from '../db.js';
 import { defaultCategories } from '../utils/defaultCategories.js';
 
 const DEMO_USER = {
-    name: 'Alex',
-    email: 'alex@timetoprogram.com',
+    name: 'Priyanshi',
+    email: 'priyanshi@gmail.com',
     password: 'Test@1234',
     currency: 'USD',
 };
